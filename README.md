@@ -29,7 +29,8 @@ La API debe evolucionar según el modelo de madurez de Richardson, revise la doc
 ### Base de datos
 Revise el motor de base de datos y la cadena de conexión a su base de datos en el archivo `application.properties` y actualízelo según corresponda. El proyecto está configurado para trabajar con MySQL, para cambiar de motor de base de datos actualice el archivo `pom.xml`
 
-#### MYSQL
+#### 1. MySQL
+
 Las dependencia incluida es:
 ```
     <!-- Conexión a base de datos -->
@@ -57,16 +58,21 @@ y en el archivo application.properties agregue la cadena de conexión:
     spring.datasource.username=your_user
     spring.datasource.password=your_password
 ```
-#### POSGRESQL
-Para una conexión a postgresql considere la siguiente configuración en pom.xml
+
+#### 2. PostgreSQL
+
+Para una conexión a postgresql considere la siguiente configuración en `pom.xml`
 ```
     <dependency>
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <scope>runtime</scope>
     </dependency>
-    
-    o tambien opte por
+```
+
+  o tambien opte por
+
+```
     <!-- Source: https://mvnrepository.com/artifact/org.postgresql/postgresql -->
     <dependency>
         <groupId>org.postgresql</groupId>
@@ -75,7 +81,9 @@ Para una conexión a postgresql considere la siguiente configuración en pom.xml
         <scope>compile</scope>
     </dependency>
 ```
-Y la configuración de `application.properties` 
+
+Y la configuración de `application.properties`
+
 ```
     # JPA / Hibernate settings
     spring.jpa.database=postgresql
@@ -91,9 +99,11 @@ Y la configuración de `application.properties`
 ```
 En la mayoría de los casos, no es necesario incluir esta propiedad `spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect`. Hibernate 6 puede deducir el dialecto correcto basándose exclusivamente en la spring.datasource.url
 
-#### MARIADB
-Opte por usar la configuración de MariaDB si es que la configuración de MySQL le genera error, estos errores se debe debido a actualizaciones recientes de MySQL
-Para una conexión a postgresql considere la siguiente configuración en pom.xml
+#### 3. MariaDB
+
+Opte por usar la configuración de MariaDB si es que la configuración de MySQL le genera error, estos errores se debe a actualizaciones recientes de MySQL
+Para una conexión a MariaDB considere la siguiente configuración en `pom.xml`
+
 ```
     <!-- Source: https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
         <dependency>
@@ -103,7 +113,9 @@ Para una conexión a postgresql considere la siguiente configuración en pom.xml
             <scope>compile</scope>
         </dependency>
 ```
+
 Y la configuración de `application.properties`
+
 ```
     # JPA / Hibernate settings
     spring.jpa.database=mysql
@@ -118,6 +130,7 @@ Y la configuración de `application.properties`
 ```
 
 ### JPA
+
 En el archivo archivo `pom.xml` agregue la dependencia
 ```
     <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
