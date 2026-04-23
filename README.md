@@ -29,6 +29,7 @@ La API debe evolucionar según el modelo de madurez de Richardson, revise la doc
 ### Base de datos
 Revise el motor de base de datos y la cadena de conexión a su base de datos en el archivo `application.properties` y actualízelo según corresponda. El proyecto está configurado para trabajar con MySQL, para cambiar de motor de base de datos actualice el archivo `pom.xml`
 
+#### MYSQL
 Las dependencia incluida es:
 ```
     <!-- Conexión a base de datos -->
@@ -46,16 +47,17 @@ y en el archivo application.properties agregue la cadena de conexión:
     # JPA / Hibernate settings
     spring.jpa.database=mysql
     spring.jpa.show-sql=false
-    spring.jpa.generate-ddl=true
-    spring.jpa.hibernate.ddl.auto=update
+    spring.jpa.hibernate.ddl-auto=update
     
     # Database connection
     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    # Desde Spring Boot 3.1
+    spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
     spring.datasource.url=jdbc:mysql://localhost:3306/travelappdb
     spring.datasource.username=your_user
     spring.datasource.password=your_password
 ```
-
+#### POSGRESQL
 Para una conexión a postgresql considere la siguiente configuración en pom.xml
 ```
     <dependency>
@@ -63,10 +65,19 @@ Para una conexión a postgresql considere la siguiente configuración en pom.xml
         <artifactId>postgresql</artifactId>
         <scope>runtime</scope>
     </dependency>
+    
+    o tambien opte por
+    <!-- Source: https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.10</version>
+        <scope>compile</scope>
+    </dependency>
 ```
-Y la configuración de `application.properties`
+Y la configuración de `application.properties` 
 ```
-    server.port=9090
+    # JPA / Hibernate settings
     spring.jpa.database=postgresql
     spring.jpa.show-sql=false
     spring.jpa.hibernate.ddl-auto=update
@@ -74,10 +85,38 @@ Y la configuración de `application.properties`
     spring.datasource.driver-class-name=org.postgresql.Driver
     #Desde Spring Boot 3.1
     spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-    spring.datasource.url=jdbc:postgresql://localhost:5432/rentalappdb
+    spring.datasource.url=jdbc:postgresql://localhost:5432/travelappdb
     spring.datasource.username=your_user
     spring.datasource.password=your_password
 ```
+En la mayoría de los casos, no es necesario incluir esta propiedad `spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect`. Hibernate 6 puede deducir el dialecto correcto basándose exclusivamente en la spring.datasource.url
+
+#### MARIADB
+Opte por usar la configuración de MariaDB si es que la configuración de MySQL le genera error, estos errores se debe debido a actualizaciones recientes de MySQL
+Para una conexión a postgresql considere la siguiente configuración en pom.xml
+```
+    <!-- Source: https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>3.5.8</version>
+            <scope>compile</scope>
+        </dependency>
+```
+Y la configuración de `application.properties`
+```
+    # JPA / Hibernate settings
+    spring.jpa.database=mysql
+    spring.jpa.show-sql=true
+    spring.jpa.hibernate.ddl-auto=update
+    
+    # Database connection
+    spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+    spring.datasource.url=jdbc:mariadb://localhost:3306/travelappdb
+    spring.datasource.username=your_user
+    spring.datasource.password=your_password
+```
+
 ### JPA
 En el archivo archivo `pom.xml` agregue la dependencia
 ```
