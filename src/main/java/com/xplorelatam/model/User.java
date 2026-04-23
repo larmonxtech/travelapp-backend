@@ -12,26 +12,26 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name="users")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
   @Id
   @EqualsAndHashCode.Include
   private Integer idUser;
 
-  @Column(nullable = false, length = 70,
-    unique = true)
+  @Column(nullable = false, length = 60, unique = true)
   private String username;
 
-  @Column(nullable = false, length = 100)
+  @Column(nullable = false, length = 60)
   private String password;
 
-  @Column(nullable = false)
+  @Column(nullable = false, length = 50)
   private boolean enabled;
 
-  @ManyToMany(fetch= FetchType.EAGER) //Relacion muchos a muchos
-  @JoinTable(name= "user_role",
-    joinColumns= @JoinColumn(name="id_user", referencedColumnName = "idUser"),
-    inverseJoinColumns =  @JoinColumn(name="id_role", referencedColumnName = "idRole"))
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name="user_role",
+          joinColumns = @JoinColumn(name="id_user", referencedColumnName="idUser"),
+          inverseJoinColumns = @JoinColumn(name="id_role", referencedColumnName="idRole")
+  )
   private List<Role> roles;
 }

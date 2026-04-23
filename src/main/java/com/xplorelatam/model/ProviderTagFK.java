@@ -11,15 +11,15 @@ import java.io.Serializable;
 @Embeddable
 @EqualsAndHashCode
 public class ProviderTagFK implements Serializable {
-  @ManyToOne
-  @JoinColumn(name="id_provider", nullable = false,
-    foreignKey = @ForeignKey(name="FK_PROVIDERTAG_PROVIDER"))
-  private Provider provider;
+    @ManyToOne
+    @JoinColumn(name="id_provider", nullable = false,
+            foreignKey = @ForeignKey(name="FK_PROVIDERTAG_PROVIDER"))
+    private Provider provider;
 
-  @ManyToOne
-  @JoinColumn(name="id_tag", nullable = false,
-    foreignKey = @ForeignKey(name="FK_PROVIDERTAG_TAG"))
-  private Tag tag;
+    @ManyToOne
+    @JoinColumn(name="id_tag", nullable = false,
+            foreignKey = @ForeignKey(name="FK_PROVIDERTAG_TAG"))
+    private Tag tag;
 
-  // Mas atributos
+    // Mas atributos
 }

@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @IdClass(ProviderTagFK.class)
 public class ProviderTag {
-  @Id
-  //@ManyToOne
-  private Provider provider;
+    @Id
+    //@ManyToOne
+    private Provider provider;
 
-  @Id
-  //@ManyToOne
-  private Tag tag;
+    @Id
+    //@ManyToOne
+    private Tag tag;
 
 	/*static class ProviderTagFK implements Serializable {
 		@ManyToOne
