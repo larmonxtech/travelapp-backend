@@ -1,7 +1,8 @@
-package com.xplorelatam.service;
+package com.xplorelatam.service.implementation;
 
 import com.xplorelatam.model.Category;
 import com.xplorelatam.repository.ICategoryRepository;
+import com.xplorelatam.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService implements ICategoryService{
+public class CategoryService implements ICategoryService {
     private final ICategoryRepository repo;
 
     @Override
