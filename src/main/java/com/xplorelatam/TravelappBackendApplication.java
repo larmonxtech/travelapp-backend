@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TravelappFrontendApplication {
+public class TravelappBackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TravelappFrontendApplication.class, args);
+        SpringApplication.run(TravelappBackendApplication.class, args);
     }
 
 }
