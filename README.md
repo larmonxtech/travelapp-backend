@@ -141,3 +141,20 @@ En el archivo archivo `pom.xml` agregue la dependencia
         <scope>compile</scope>
     </dependency>
 ```
+## DTO
+
+### ModelMapper
+Revise la documentación de [modelMapper](https://modelmapper.org/getting-started/)
+
+En el archivo archivo `pom.xml` agregue la dependencia
+```
+        <!-- Source: https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.2.6</version>
+            <scope>compile</scope>
+        </dependency>
+```
+
+Tambien puede optar por usar [MapStruct](https://mapstruct.org/)
