@@ -2,6 +2,7 @@ package com.xplorelatam.service.implementation;
 
 import com.xplorelatam.model.Category;
 import com.xplorelatam.repository.ICategoryRepository;
+import com.xplorelatam.repository.IGenericRepository;
 import com.xplorelatam.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,10 +11,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryService implements ICategoryService {
+public class CategoryService extends GenericService<Category, Integer> implements ICategoryService {
     private final ICategoryRepository repo;
 
     @Override
+    protected IGenericRepository<Category, Integer> getRepo() {
+        return repo;
+    }
+
+    /*@Override
     public Category save(Category category) throws Exception {
         return repo.save(category);
     }
@@ -38,4 +44,6 @@ public class CategoryService implements ICategoryService {
     public void delete(Integer id) throws Exception {
         repo.deleteById(id);
     }
+
+     */
 }
