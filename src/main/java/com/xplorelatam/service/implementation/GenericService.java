@@ -1,5 +1,6 @@
 package com.xplorelatam.service.implementation;
 
+import com.xplorelatam.exception.ModelNotFoundException;
 import com.xplorelatam.repository.IGenericRepository;
 import com.xplorelatam.service.IGenericService;
 
@@ -26,7 +27,7 @@ public abstract class GenericService<T,ID> implements IGenericService<T,ID> {
 
     @Override
     public T findById(ID id) throws Exception {
-        return getRepo().findById(id).orElse(null);
+        return getRepo().findById(id).orElseThrow(() -> new ModelNotFoundException("ID NOT FOUND: " + id));
     }
 
     @Override
