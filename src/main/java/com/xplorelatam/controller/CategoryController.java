@@ -2,9 +2,12 @@ package com.xplorelatam.controller;
 
 import com.xplorelatam.dto.CategoryDTO;
 import com.xplorelatam.model.Category;
+import com.xplorelatam.model.Tag;
 import com.xplorelatam.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -60,6 +63,24 @@ public class CategoryController {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/hateoas/{id}")
+    public EntityModel<CategoryDTO> findByIdHateoas(@PathVariable Integer id) throws Exception{
+        Category obj = service.findById(id);
+        EntityModel<CategoryDTO> entityModel = EntityModel.of(modelMapper.map(obj, CategoryDTO.class));
+
+        WebMvcLinkBuilder link1 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TagController.class).findById(id));
+        WebMvcLinkBuilder link2 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TagController.class).findAll());
+        WebMvcLinkBuilder link3 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(CategoryController.class).findAll());
+        WebMvcLinkBuilder link4 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(ReviewController.class).findAll());
+
+        entityModel.add(link1.withRel("category-self-info"));
+        entityModel.add(link2.withRel("category-all-info"));
+        entityModel.add(link3.withRel("tag-all-info"));
+        entityModel.add(link4.withRel("review-all-info"));
+
+        return entityModel;
     }
 
 }
