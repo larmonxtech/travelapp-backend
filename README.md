@@ -158,3 +158,16 @@ En el archivo archivo `pom.xml` agregue la dependencia
 ```
 
 Tambien puede optar por usar [MapStruct](https://mapstruct.org/)
+
+### HATEOAS - Level 3 Richardson
+En el archivo archivo `pom.xml` agregue la dependencia
+```
+        <!--Hateoas - Nivel 3 Richardson-->
+        <!-- Source: https://mvnrepository.com/artifact/org.springframework.hateoas/spring-hateoas -->
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>3.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+```
