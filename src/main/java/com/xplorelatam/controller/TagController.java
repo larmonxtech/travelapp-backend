@@ -1,8 +1,13 @@
 package com.xplorelatam.controller;
 
+import com.xplorelatam.dto.CategoryDTO;
+import com.xplorelatam.dto.TagDTO;
+import com.xplorelatam.model.Category;
 import com.xplorelatam.model.Tag;
 import com.xplorelatam.service.ITagService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +23,13 @@ import java.util.List;
 // @CrossOrigin(origins = "*")
 public class TagController {
     private final ITagService service;
+    @Qualifier("tagMapper")
+    private final ModelMapper modelMapper;
 
     @GetMapping // GET, POST, PUT, DELETE
-    public ResponseEntity<List<Tag>> findAll() throws Exception{
-        List<Tag> list = service.findAll();
+    public ResponseEntity<List<TagDTO>> findAll() throws Exception{
+        // List<Tag> list = service.findAll();
+        List<TagDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, TagDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
 
@@ -32,8 +40,9 @@ public class TagController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody Tag tag) throws Exception{
-        Tag obj = service.save(tag);
+    public ResponseEntity<Void> save(@RequestBody TagDTO dto) throws Exception{
+        // Tag obj = service.save(tag);
+        Tag obj = service.save(modelMapper.map(dto, Tag.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdTag()).toUri();
         return ResponseEntity.created(location).build();
     }
