@@ -171,3 +171,16 @@ En el archivo archivo `pom.xml` agregue la dependencia
             <scope>compile</scope>
         </dependency>
 ```
+
+## Validaciones
+
+En el archivo archivo `pom.xml` agregue la dependencia
+```
+        <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>4.0.6</version>
+            <scope>compile</scope>
+        </dependency>
+```
