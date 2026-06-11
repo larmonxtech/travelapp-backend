@@ -32,15 +32,15 @@ public class LoginController {
     private final JwtUserDetailsService jwtUserDetailsService;
 
     @PostMapping("/login")
-    //public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) throws Exception {
-    public ResponseEntity<Boolean> login(@RequestBody JwtRequest jwtRequest, HttpServletResponse response) throws Exception {
+    public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest jwtRequest) throws Exception {
+    //public ResponseEntity<Boolean> login(@RequestBody JwtRequest jwtRequest, HttpServletResponse response) throws Exception {
         try{
             authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
 
             final UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(jwtRequest.getUsername());
             final String accessToken = jwtTokenUtil.generateToken(userDetails);
 
-            ResponseCookie cookie = ResponseCookie.from("jwt", accessToken)
+            /*ResponseCookie cookie = ResponseCookie.from("jwt", accessToken)
                     .httpOnly(true)
                     .secure(false)
                     .path("/")
@@ -50,8 +50,8 @@ public class LoginController {
 
             response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-            return ResponseEntity.ok(true);
-            //return ResponseEntity.ok(new JwtResponse(accessToken));
+            return ResponseEntity.ok(true);*/
+            return ResponseEntity.ok(new JwtResponse(accessToken));
         }catch(Exception e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

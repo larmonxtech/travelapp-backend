@@ -23,7 +23,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtUserDetailsService jwtUserDetailsService;
 
     //Para el enfoque de HttpOnly
-    @Override
+    /*@Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
@@ -63,10 +63,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }
+    }*/
 
     //Enfoque Authorization Bearer Token
-    /*@Override
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, IOException {
         final String header = request.getHeader("Authorization");
         //Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.KMUFsIDTnFmyG3nMiGM6H9FNFUROf3wh7SmqJp-QV30
@@ -96,5 +96,5 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         filterChain.doFilter(request, response);
-    }*/
+    }
 }

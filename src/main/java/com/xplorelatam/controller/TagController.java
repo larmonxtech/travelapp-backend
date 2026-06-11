@@ -1,10 +1,9 @@
 package com.xplorelatam.controller;
 
-import com.xplorelatam.dto.CategoryDTO;
 import com.xplorelatam.dto.TagDTO;
-import com.xplorelatam.model.Category;
 import com.xplorelatam.model.Tag;
 import com.xplorelatam.service.ITagService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,47 +21,47 @@ import java.util.List;
 @RequiredArgsConstructor
 // @CrossOrigin(origins = "*")
 public class TagController {
+
     private final ITagService service;
-    @Qualifier("tagMapper")
+
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
 
-    @GetMapping // GET, POST, PUT, DELETE
-    public ResponseEntity<List<TagDTO>> findAll() throws Exception{
-        // List<Tag> list = service.findAll();
+    @GetMapping
+    public ResponseEntity<List<TagDTO>> findAll() throws Exception {
         List<TagDTO> list = service.findAll().stream().map(e -> modelMapper.map(e, TagDTO.class)).toList();
         return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tag> findById(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<TagDTO> findById(@PathVariable("id") Integer id) throws Exception {
         Tag obj = service.findById(id);
-        return ResponseEntity.ok(obj);
+        return ResponseEntity.ok(modelMapper.map(obj, TagDTO.class));
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody TagDTO dto) throws Exception{
-        // Tag obj = service.save(tag);
+    public ResponseEntity<Void> save(@Valid @RequestBody TagDTO dto) throws Exception {
         Tag obj = service.save(modelMapper.map(dto, Tag.class));
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getIdTag()).toUri();
         return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tag> update(@RequestBody Tag tag, @PathVariable("id") Integer id) throws Exception{
-        Tag obj = service.update(tag, id);
-        return ResponseEntity.ok(obj);
+    public ResponseEntity<TagDTO> update(@Valid @RequestBody TagDTO dto, @PathVariable("id") Integer id) throws Exception {
+        Tag obj = service.update(modelMapper.map(dto, Tag.class), id);
+        return ResponseEntity.ok(modelMapper.map(obj, TagDTO.class));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception{
+    public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/hateoas/{id}")
-    public EntityModel<Tag> findByIdHateoas(@PathVariable Integer id) throws Exception{
+    public EntityModel<TagDTO> findByIdHateoas(@PathVariable Integer id) throws Exception {
         Tag obj = service.findById(id);
-        EntityModel<Tag> entityModel = EntityModel.of(obj);
+        EntityModel<TagDTO> entityModel = EntityModel.of(modelMapper.map(obj, TagDTO.class));
 
         WebMvcLinkBuilder link1 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TagController.class).findById(id));
         WebMvcLinkBuilder link2 = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(TagController.class).findAll());

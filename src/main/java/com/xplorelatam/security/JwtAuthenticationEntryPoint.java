@@ -2,7 +2,7 @@ package com.xplorelatam.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mitocode.exception.CustomErrorTemplate;
+import com.xplorelatam.exception.CustomErrorTemplate;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

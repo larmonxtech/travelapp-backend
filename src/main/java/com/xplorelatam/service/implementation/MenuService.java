@@ -5,6 +5,7 @@ import com.xplorelatam.repository.IGenericRepository;
 import com.xplorelatam.repository.IMenuRepository;
 import com.xplorelatam.service.IMenuService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

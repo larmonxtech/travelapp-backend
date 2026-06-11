@@ -12,8 +12,8 @@ public class TagDTO {
     private Integer idTag;
 
     @NotNull
-    private String nombreEtiqueta;
+    private String name;
 
     @NotNull
-    private Boolean estadoEtiqueta;
+    private Boolean status;
 }
