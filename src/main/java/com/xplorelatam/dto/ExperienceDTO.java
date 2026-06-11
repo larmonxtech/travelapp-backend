@@ -14,14 +14,14 @@ public class ExperienceDTO {
     private Integer idExperience;
 
     @NotNull
-    private CategoryDTO category;
+    private Integer idCategory;
 
     @NotNull
     @Size(min = 3, max = 150)
     private String name;
 
     @NotNull
-    @Size(min = 10, max = 255)
+    @Size(min = 3, max = 255)
     private String description;
 
     @NotNull
