@@ -14,6 +14,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Duration;
+import java.util.Map;
 
 
 @RestController
@@ -81,5 +83,11 @@ public class LoginController {
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/auth/user")
+    public ResponseEntity<Map<String, String>> getUserInfo(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ResponseEntity.ok(Map.of("username", username));
     }
 }
