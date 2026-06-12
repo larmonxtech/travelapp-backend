@@ -44,5 +44,5 @@ public class Experience {
     private String experienceType;
 
     @Column(nullable=false)
-    private boolean status;
+    private Boolean status;
 }

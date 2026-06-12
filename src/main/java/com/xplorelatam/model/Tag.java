@@ -21,7 +21,7 @@ public class Tag {
   private String name;
 
   @Column(nullable = false)
-  private boolean status;
+  private Boolean status;
 }
 
 // lowerCamelCase

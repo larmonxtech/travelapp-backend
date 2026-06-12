@@ -171,3 +171,102 @@ En el archivo archivo `pom.xml` agregue la dependencia
             <scope>compile</scope>
         </dependency>
 ```
+
+## Validaciones
+
+En el archivo archivo `pom.xml` agregue la dependencia
+```
+        <!-- Source: https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+            <version>4.0.6</version>
+            <scope>compile</scope>
+        </dependency>
+```
+
+## Seguridad
+En el archivo archivo `pom.xml` agregue la dependencia
+
+```
+        <!-- Seguridad -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- JWT Tokens * -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.13.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.13.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+```
+## Usuarios y Roles
+```
+  INSERT INTO role (id_role, name, description) VALUES (1, 'ADMIN', 'Administrador');
+  INSERT INTO role (id_role, name, description) VALUES (2, 'USER', 'Usuario');
+  INSERT INTO role (id_role, name, description) VALUES (3, 'DBA', 'Admin de bd');
+  
+  -- El hash equivalente de la contraseña es: 123
+  INSERT INTO users(id_user, username, password, enabled) values (1, 'exampletest@gmail.com', '$2a$10$ju20i95JTDkRa7Sua63JWOChSBc0MNFtG/6Sps2ahFFqN.HCCUMW.', 1);
+  INSERT INTO users(id_user, username, password, enabled) values (2, 'examplecode@gmail.com', '$2a$10$ju20i95JTDkRa7Sua63JWOChSBc0MNFtG/6Sps2ahFFqN.HCCUMW.', 1);
+  
+  
+  INSERT INTO user_role (id_user, id_role) VALUES (1, 1);
+  INSERT INTO user_role (id_user, id_role) VALUES (1, 3);
+  INSERT INTO user_role (id_user, id_role) VALUES (2, 2);
+```
+
+## Menus de acuerdo al rol
+```
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (1, 'Dashboard', 'home', '/pages/dashboard');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (2, 'Search', 'search', '/pages/search');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (3, 'Experiences', 'view_carousel', '/pages/experience');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (4, 'Categories', 'star_rate', '/pages/category');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (5, 'Travelers', 'healing', '/pages/traveler');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (6, 'Tags', 'assignment', '/pages/tag');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (7, 'Providers', 'accessibility', '/pages/provider');
+  INSERT INTO menu(id_menu, name, icon, url) VALUES (8, 'Reports', 'assessment', '/pages/report');
+  
+  
+  INSERT INTO menu_role (id_menu, id_role) VALUES (1, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (2, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (3, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (4, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (5, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (6, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (7, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (8, 1);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (1, 2);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (3, 2);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (4, 2);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (5, 2);
+  INSERT INTO menu_role (id_menu, id_role) VALUES (6, 2);
+
+
+								select m.* from menu_role mr
+                                inner join user_role ur on ur.id_role = mr.id_role
+                                inner join menu m on m.id_menu = mr.id_menu
+                                inner join users u on u.id_user = ur.id_user
+                                where u.username = 'examplecode@gmail.com'
+```

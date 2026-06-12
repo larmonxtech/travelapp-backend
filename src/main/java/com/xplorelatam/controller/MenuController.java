@@ -1,8 +1,11 @@
 package com.xplorelatam.controller;
 
+import com.xplorelatam.dto.MenuDTO;
 import com.xplorelatam.model.Menu;
 import com.xplorelatam.service.IMenuService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,6 +19,8 @@ import java.util.List;
 public class MenuController {
 
     private final IMenuService service;
+    @Qualifier("defaultMapper")
+    private final ModelMapper mapper;
 
     @GetMapping
     public ResponseEntity<List<Menu>> findAll() throws Exception {
@@ -46,5 +51,11 @@ public class MenuController {
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) throws Exception {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/user")
+    public ResponseEntity<List<MenuDTO>> getMenusByUser(){
+        List<MenuDTO> menus = service.getMenusByUsername().stream().map(e -> mapper.map(e, MenuDTO.class)).toList();
+        return ResponseEntity.ok(menus);
     }
 }

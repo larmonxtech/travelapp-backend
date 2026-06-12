@@ -4,8 +4,10 @@ import com.xplorelatam.dto.CategoryDTO;
 import com.xplorelatam.model.Category;
 import com.xplorelatam.model.Tag;
 import com.xplorelatam.service.ICategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import java.util.List;
 public class CategoryController {
     //@Autowired
     private final ICategoryService service;
+    @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
     
     @GetMapping
@@ -41,7 +44,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> save(@RequestBody CategoryDTO dto) throws Exception {
+    public ResponseEntity<Void> save(@Valid @RequestBody CategoryDTO dto) throws Exception {
         Category obj = service.save(modelMapper.map(dto, Category.class));
 
         //return new ResponseEntity<>(obj, HttpStatus.CREATED);
@@ -52,7 +55,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDTO> update(@PathVariable Integer id, @RequestBody CategoryDTO dto) throws Exception {
+    public ResponseEntity<CategoryDTO> update(@Valid @PathVariable Integer id, @RequestBody CategoryDTO dto) throws Exception {
         Category obj = service.update(modelMapper.map(dto, Category.class), id);
 
         return ResponseEntity.ok(modelMapper.map(obj, CategoryDTO.class));
