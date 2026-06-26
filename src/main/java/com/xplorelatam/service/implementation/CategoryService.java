@@ -5,6 +5,8 @@ import com.xplorelatam.repository.ICategoryRepository;
 import com.xplorelatam.repository.IGenericRepository;
 import com.xplorelatam.service.ICategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,11 @@ public class CategoryService extends GenericService<Category, Integer> implement
     @Override
     protected IGenericRepository<Category, Integer> getRepo() {
         return repo;
+    }
+
+    @Override
+    public Page<Category> listPage(Pageable pageable) {
+      return repo.findAll(pageable);
     }
 
     /*@Override

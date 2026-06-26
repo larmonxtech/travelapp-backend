@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +28,7 @@ public class CategoryController {
     private final ICategoryService service;
     @Qualifier("defaultMapper")
     private final ModelMapper modelMapper;
-    
+
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> findAll() throws Exception {
         // ModelMapper modelMapper = new ModelMapper();
@@ -86,4 +88,9 @@ public class CategoryController {
         return entityModel;
     }
 
+  @GetMapping("/pageable")
+  public ResponseEntity<Page<Category>> listPageable(Pageable pageable){
+    Page<Category> page =service.listPage(pageable);
+    return ResponseEntity.ok(page);
+  }
 }
